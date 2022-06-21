@@ -38,7 +38,7 @@ exports.login = (req, res) => {
             }
             res.status(200).json({                // Sinon renvoit un objet json avec l'userId et un token d'authentification
               userId: user._id,
-              token: jwt.sign(                    // Création du token à partir de l'userId, d'un mot de passe et un délai d'expiration
+              token: jwt.sign(                    // Création du token avec jsonwebtoken à partir de l'userId avec une clé d'encodage et un délai d'expiration
                 {userId: user._id},
                 process.env.TOKEN_PASSWORD,
                 {expiresIn: '24h'}
