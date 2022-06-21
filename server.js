@@ -1,47 +1,26 @@
+// Import du package http et de l'application app
 const http = require('http');
 const app = require('./app');
 
-const normalizePort = val => {
-  const port = parseInt(val, 10);
+// Import des fonctions normalizePort et errorHandler
+const functions = require('./functions/functions');
 
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT || '3000');
+// Déclaration du port normalisé
+const port = functions.normalizePort(process.env.PORT ||'3000');
+
+// Définition du port sur lequel va fonctionner l'application
 app.set('port', port);
 
-const errorHandler = error => {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges.');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use.');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
-
+// Déclaration du serveur avec app comme argument qui sera exécutée à chaque appel sur ce serveur
 const server = http.createServer(app);
 
-server.on('error', errorHandler);
+// Au lancement du serveur, si une erreur apparait applique la fonction errorHandler sinon affiche dans la console le port ou l'adresse écouté
+server.on('error', functions.errorHandler);
 server.on('listening', () => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
 
+// Ecoute du serveur sur le port déclaré
 server.listen(port);
