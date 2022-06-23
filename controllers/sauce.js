@@ -11,10 +11,6 @@ exports.createSauce = (req,res) => {
     const sauce = new Sauce({
         ...sauceObject,         // Copie tous les éléments de l'objet json dans la nouvelle instance
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,    // Récupère l'url de l'image de manière dynamique
-        likes: 0,               // Initialise les likes à 0
-        dislikes: 0,            // Initialise les dislikes à 0
-        usersLiked: [],         // Initialise les usersLiked avec un tableau vide
-        usersDisliked: []       // Initialise les usersDisliked avec un tableau vide
     });
     sauce.save()    // Enregistrement de la nouvelle sauce dans la base de données
         .then(() => res.status(201).json({ message: 'Sauce saved'}))    // Création de ressource

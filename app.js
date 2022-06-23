@@ -10,6 +10,7 @@ dotenv.config();
 // Import des routers
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
+const likeRoutes = require('./routes/like');
 
 // Déclaration de l'application
 const app = express();
@@ -38,6 +39,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 // Enregistrement des routers
 app.use('/api/auth', userRoutes);
 app.use('/api/sauces', sauceRoutes);
+app.use('/api/sauces', likeRoutes);
 
 // Exporte l'application
 module.exports = app;
