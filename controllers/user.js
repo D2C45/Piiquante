@@ -18,7 +18,7 @@ exports.signup = (req, res) => {
                 password: hash          // Password issu du hashage
             });
             user.save()                 // Sauvegarde du user
-                .then(() => res.status(201).json({message: 'User created'}))  // Créatin de ressource
+                .then(() => res.status(201).json({message: 'User created'}))  // Création de ressource
                 .catch(error => res.status(500).json({error}))  // Erreur serveur
         })
         .catch(error => res.status(500).json({error})); // Erreur serveur

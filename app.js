@@ -2,12 +2,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Configure l'environnement de variables
 dotenv.config();
 
 // Import des routers
 const userRoutes = require('./routes/user');
+const sauceRoutes = require('./routes/sauce');
 
 // Déclaration de l'application
 const app = express();
@@ -30,8 +32,12 @@ app.use((req, res, next) => {
     next();
   });
 
+// Gestion des requêtes images par express de manière statique
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 // Enregistrement des routers
 app.use('/api/auth', userRoutes);
+app.use('/api/sauces', sauceRoutes);
 
 // Exporte l'application
 module.exports = app;
