@@ -9,7 +9,7 @@ dotenv.config();
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];                  // Récupération du token dans le header authorization
-    req.token = jwt.verify(token, process.env.TOKEN_PASSWORD);       // Décodage du token
+    req.token = jwt.verify(token, process.env.TOKEN_PASSWORD);       // Décodage du token et ajout dans la requête pour pouvoir être utilisé dans les controllers
     if (req.body.userId && req.body.userId !== req.token.userId) {          // Comparaison du userId de la requête avec celui du token
       throw 'Unauthorized request';
     } else {

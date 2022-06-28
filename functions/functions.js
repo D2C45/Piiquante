@@ -1,3 +1,6 @@
+// Import du package fs
+const fs = require('fs');
+
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -37,3 +40,13 @@ exports.errorHandler = error => {
         throw error;
     }
   };
+
+/**
+ * Supprime le fichier crée par multer si la requête échoue
+ * @param {object} req la requête
+ */
+exports.removeImageFile = (req, res) => {
+  fs.unlink(`images/${req.file.filename}`, () => {                 // Suppression du fichier créé par multer dans le dossier images
+    res.status(403).json({ error: "Unauthorized request" });    // Requête non autorisée        
+  }) 
+}
