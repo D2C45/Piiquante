@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 // Configure l'environnement de variables
 dotenv.config();
@@ -32,6 +34,20 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     next();
   });
+
+// Limite le nombre de requêtes
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+app.use(limiter)
+
+
+// Sécurisation des headers avec helmet
+app.use(helmet({ crossOriginResourcePolicy: { policy: "same-site" } }));
 
 // Gestion des requêtes images par express de manière statique
 app.use('/images', express.static(path.join(__dirname, 'images')));

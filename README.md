@@ -35,7 +35,8 @@ MONGODB_USER = identifiant de votre base de données
 MONGODB_PASSWORD = mot de passe de votre base de données
 MONGODB_CLUSTER_NAME = nom du cluster de votre base de données
 MONGODB_DATABASE_NAME = nom de votre base de données
-TOKEN_PASSWORD = clé d'encodage secrète pour le token</code></pre>
+TOKEN_PASSWORD = clé d'encodage secrète pour le token
+CRYPTO_PASSWORD = clé de cryptage de l'email avec cryptojs</code></pre>
 
 A la racine du dossier backend, créer un fichier .gitignore dans lequel vous placez les node modules, le fichier .env et le dossier images :
 <pre><code>node_modules
